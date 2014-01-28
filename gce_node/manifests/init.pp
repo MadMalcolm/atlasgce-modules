@@ -146,6 +146,8 @@ class gce_node (
 
     exec {'ip link set eth0 txqueuelen 10000': path => '/sbin' }
 
-    class {'shoal':}
+    class {'shoal':
+      require => Class['cvmfs::client'],
+    }
   }
 }
