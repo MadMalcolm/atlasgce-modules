@@ -20,19 +20,32 @@ class shoal (
     
   } elsif $osfamily == 'RedHat' {
   
-    file {'shoal.repo':
-      path    => '/etc/yum.repos.d/shoal.repo',
-      ensure  => present,
-      mode    => 0666,
-      source => 'puppet:///modules/shoal/shoal.repo',
+    yumrepo { 'shoalrepo':
+        descr    => "Shoal Repository",
+        baseurl  => "http://shoal.heprc.uvic.ca/repo/prod/",
+        gpgcheck => 0,
+        enabled  => 1,
     }
     
-    package {'shoal-client':
+    package { 'shoal-client':
       ensure => installed,
+      require => Yumrepo['shoalrepo'],
+    }
+
+    package { 'python-simplejson':
+      ensure => installed,
+      before => Package['shoal-client'],
     }
     
   }
 
+  # -- ensure the shoal configuration directory exists --
+  file {'/etc/shoal':
+    ensure => directory,
+    mode => 0755,
+    before => File['/etc/shoal/shoal_client.conf']
+  }
+  
   # configure shoal-client
   file {'/etc/shoal/shoal_client.conf':
     ensure => present,
@@ -40,7 +53,10 @@ class shoal (
     content => template("shoal/shoal_client.conf.erb"),
   }
 
-  exec {'/usr/bin/shoal-client':
+  cron {'shoalclient':
+    command => '/usr/bin/shoal-client',
+    user    => root,
+    minute  => [ 0, 30 ],
     require => [ File['/etc/shoal/shoal_client.conf'],
                  File[$cvmfs_config] ],
   }
