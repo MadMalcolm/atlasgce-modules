@@ -48,6 +48,19 @@ class gce_node::grid_setup (
       require => File[$security_dir],
     }
 
+    yumrepo { 'EGI-trustanchors':
+      descr    => "EGI-trustanchors",
+      baseurl  => "http://repository.egi.eu/sw/production/cas/1/current/",
+      gpgkey   => "http://repository.egi.eu/sw/production/cas/1/GPG-KEY-EUGridPMA-RPM-3",
+      gpgcheck => 1,
+      enabled  => 1,
+    }
+
+    package { 'ca-policy-egi-core':
+      ensure  => installed,
+      require => Yumrepo['EGI-trustanchors'],
+    }
+
   }
   
 }
