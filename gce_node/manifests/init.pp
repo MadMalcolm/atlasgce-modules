@@ -28,6 +28,7 @@ class gce_node (
   $cvmfs_domain_servers = undef,
   $cvmfs_quota = 20000,
   $cvmfs_cache = '/var/cache/cvmfs2',
+  $cvmfs_repositories = 'atlas.cern.ch,atlas-condb.cern.ch,grid.cern.ch',
   $condor_pool_password = undef,
   $condor_use_gsi = false,
   $condor_slots,
@@ -86,7 +87,7 @@ class gce_node (
     }  
 
     class { 'cvmfs::client':
-      repositories => 'atlas.cern.ch,atlas-condb.cern.ch,grid.cern.ch',
+      repositories => $cvmfs_repositories,
       cvmfs_servers => $cvmfs_domain_servers,
       quota => $cvmfs_quota,
       debug => $debug,
