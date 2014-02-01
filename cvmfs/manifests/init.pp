@@ -32,7 +32,7 @@ class cvmfs (
   include packagerepos
 
   if $osvariant != 'CernVM' {
-    package { ['cvmfs', 'cvmfs-init-scripts', 'cvmfs-keys', 'fuse', 'fuse-libs']:
+    package { ['cvmfs', 'cvmfs-init-scripts', 'cvmfs-keys', 'cvmfs-auto-setup', 'fuse', 'fuse-libs']:
       ensure => installed,
       require => Class[Packagerepos]
     }
