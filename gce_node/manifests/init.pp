@@ -150,5 +150,8 @@ class gce_node (
     class {'shoal':
       require => Class['cvmfs::client'],
     }
+
+    class {'wlcg': }
+
   }
 }
