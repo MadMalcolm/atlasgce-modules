@@ -32,11 +32,6 @@ class shoal (
       require => Yumrepo['shoalrepo'],
     }
 
-    package { 'python-simplejson':
-      ensure => installed,
-      before => Package['shoal-client'],
-    }
-    
   }
 
   # -- ensure the shoal configuration directory exists --
