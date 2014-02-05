@@ -11,10 +11,10 @@ class gce_node::packages (
     }
 
     # Required 64 bit packages and packages for SLC5 64 bit compatibility
-    package { ['glibc-devel.x86_64', 'openssl098e.x86_64',
+    package { ['glibc-devel.x86_64', 'openssl098e.x86_64', 'libtool',
                'freetype-devel.x86_64', 'libxml2-devel.x86_64',
                'ncurses-devel.x86_64', 'libpng-devel.x86_64', 'libXpm.x86_64',
-               'libXext-devel.x86_64']:
+               'libXext-devel.x86_64', 'libuuid-devel']:
       ensure => installed,
     }
 
@@ -42,7 +42,7 @@ class gce_node::packages (
                  'freetype.i686', 'freetype-devel.i686', 'libxml2.i686',
                  'libxml2-devel.i686', 'libaio.i686', 'ncurses-devel.i686',
                  'libpng-devel.i686', 'libXpm.i686', 'libXext.i686',
-                 'libXft.i686', 'libXext-devel.i686', 'pam.i686']:
+                 'libXft.i686', 'libXext-devel.i686', 'pam.i686', 'java-1.7.0-openjdk']:
         ensure => installed,
       }
 
@@ -64,8 +64,11 @@ class gce_node::packages (
       }
     }
 
+    package { 'xrootd-client':
+      ensure => installed,
+    }
     # Subversion required for RootCore etc.
-    package { ['subversion']:
+    package { 'subversion':
       ensure => installed,
     }
   }

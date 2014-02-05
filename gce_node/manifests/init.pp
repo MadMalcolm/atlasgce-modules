@@ -56,8 +56,8 @@ class gce_node (
   }
 
   class { 'gce_node::packages':
-    install_32bit_packages => false,
-    install_slc6_packages => false,
+    install_32bit_packages => true,
+    install_slc6_packages => true,
   }
 
   class { 'gce_node::grid_setup':
