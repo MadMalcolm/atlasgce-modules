@@ -38,11 +38,11 @@ class gce_node::packages (
     if $install_32bit_packages {
       # Extra packages for SLC5 32-bit compatibility
       package { ['glibc.i686', 'glibc-devel.i686', 'libstdc++.i686',
-                 'automake.i686', 'autoconf.i686', 'openssl098e.i686',
-                 'freetype.i686', 'freetype-devel.i686', 'libxml2.i686',
-                 'libxml2-devel.i686', 'libaio.i686', 'ncurses-devel.i686',
-                 'libpng-devel.i686', 'libXpm.i686', 'libXext.i686',
-                 'libXft.i686', 'libXext-devel.i686', 'pam.i686', 'java-1.7.0-openjdk']:
+                 'openssl098e.i686', 'freetype.i686', 'freetype-devel.i686',
+                 'libxml2.i686', 'libxml2-devel.i686', 'libaio.i686',
+                 'ncurses-devel.i686', 'libpng-devel.i686', 'libXpm.i686',
+                 'libXext.i686', 'libXft.i686', 'libXext-devel.i686',
+                 'pam.i686', 'java-1.7.0-openjdk']:
         ensure => installed,
       }
 
