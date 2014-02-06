@@ -42,7 +42,7 @@ class gce_node::packages (
                  'libxml2.i686', 'libxml2-devel.i686', 'libaio.i686',
                  'ncurses-devel.i686', 'libpng-devel.i686', 'libXpm.i686',
                  'libXext.i686', 'libXft.i686', 'libXext-devel.i686',
-                 'pam.i686', 'java-1.7.0-openjdk']:
+                 'pam.i686']:
         ensure => installed,
       }
 
@@ -62,6 +62,10 @@ class gce_node::packages (
           ensure => installed,
         }
       }
+    }
+
+    package { 'java-1.6.0-openjdk':
+      ensure => installed,
     }
 
     package { 'xrootd-client':
