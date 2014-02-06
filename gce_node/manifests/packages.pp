@@ -21,7 +21,7 @@ class gce_node::packages (
     # Compatibility packages (64 bit versions)
     package { ['compat-libtermcap.x86_64', 'compat-readline5.x86_64',
                'compat-db43.x86_64', 'compat-expat1.x86_64',
-               'compat-openldap.x86_64']:
+               'compat-openldap.x86_64', 'ganglia-gmond']:
       ensure => installed,
     }
 
