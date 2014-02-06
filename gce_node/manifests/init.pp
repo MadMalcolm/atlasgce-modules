@@ -91,6 +91,7 @@ class gce_node (
       cvmfs_servers => $cvmfs_domain_servers,
       quota => $cvmfs_quota,
       debug => $debug,
+      before => Class['condor::client'],
     }
   }
 

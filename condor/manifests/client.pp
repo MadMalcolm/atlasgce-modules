@@ -38,7 +38,7 @@ class condor::client(
   $head,
   $role,
   $password = undef,
-  $slots = 32,
+  $slots = $processorcount,
   $collectors = undef,
   $node_type = undef,
   $password_file = "$homedir/pool_password",
@@ -128,7 +128,7 @@ class condor::client(
 
   service { 'condor':
     ensure => running,
-    enable => true,
+    enable => false,
     subscribe => File[$config, $job_wrapper],
   }
 }
