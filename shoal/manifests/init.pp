@@ -48,6 +48,14 @@ class shoal (
     content => template("shoal/shoal_client.conf.erb"),
   }
 
+  exec {'shoal-client':
+    command => '/usr/bin/shoal-client',
+    user    => root,
+    require => [ File['/etc/shoal/shoal_client.conf'],
+                 File[$cvmfs_config] ],
+  }
+
+  
   cron {'shoalclient':
     command => '/usr/bin/shoal-client',
     user    => root,
