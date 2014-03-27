@@ -353,15 +353,21 @@ update_condor_local_config() {
 
 # set up condor ccb if only private networking is available
 setup_ccb() {
-	/sbin/ifconfig | grep "inet addr" | egrep -v "addr:127.|addr:192.|addr:172.|addr:10." > /dev/null
-	NON_LOCAL=$?
+    LOCAL_ADDRESS=`/sbin/ifconfig eth0 | grep "inet addr" | awk '{print $2}' | sed s/addr://`
+    EXTHOSTNAME=`curl -s http://$EC2_METADATA/latest/meta-data/public-hostname`
+    echo $LOCAL_ADDRESS $EXTHOSTNAME "# Added for Condor CCB" >> /etc/hosts
 
-	if [ $NON_LOCAL -eq 1 ]; then
-		# All addresses are local
-        LOCAL_ADDRESS=`/sbin/ifconfig eth0 | grep "inet addr" | awk '{print $2}' | sed s/addr://`
-        EXTHOSTNAME=`curl -s http://$EC2_METADATA/latest/meta-data/public-hostname`
-        echo $LOCAL_ADDRESS $EXTHOSTNAME "# Added for Condor CCB" >> /etc/hosts
-	fi
+    # /sbin/ifconfig | grep "inet addr" | egrep -v "addr:127.|addr:192.|addr:172.|addr:10." > /dev/null
+    # NON_LOCAL=$?
+    # if [ $NON_LOCAL -eq 1 ]; then
+        # All addresses are local
+        # LOCAL_ADDRESS=`/sbin/ifconfig eth0 | grep "inet addr" | awk '{print $2}' | sed s/addr://`
+        # Use hostname from meta-data since DNS hostname is not the same as hostname reported
+	# by OpenStack
+        #echo $LOCAL_ADDRESS $HOSTNAME "# Added for Condor CCB" >> /etc/hosts
+        # EXTHOSTNAME=`curl -s http://$EC2_METADATA/latest/meta-data/public-hostname`
+        # echo $LOCAL_ADDRESS $EXTHOSTNAME "# Added for Condor CCB" >> /etc/hosts
+    #fi
 }
 
 # usage: setup_vmtype metadata
