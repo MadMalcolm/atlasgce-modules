@@ -3,14 +3,16 @@ class gce_node::grid_setup (
   $use_gridftp2 = false,
   $use_emi_grid_software = true,
   $setup_file = '/etc/profile.d/grid-setup.sh',
-  $security_dir = '/etc/grid-security'
+  $security_dir = '/etc/grid-security',
+  $experiment = 'atlas'
 )
 {
+  
   file { $setup_file:
     owner => 'root',
     group => 'root',
     mode => 0644,
-    content => template('gce_node/grid-setup.sh.erb'),
+    content => template("gce_node/grid-setup.sh.${experiment}.erb"),
   }
 
   if $gce_node::role == 'csnode' {
@@ -64,4 +66,3 @@ class gce_node::grid_setup (
   }
   
 }
-

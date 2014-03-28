@@ -45,6 +45,7 @@ class gce_node (
   $panda_administrator_email = undef,
   $atlas_site = undef,
   $cloud_type_in = undef,
+  $experiment_in = 'atlas',
   $debug = false
 ){
 
@@ -66,6 +67,7 @@ class gce_node (
       'csnode' => true,
       default => false,
     },
+    experiment => $::gce_node::experiment_in,
   }
 
   class {'gce_node::clock_setup': }
