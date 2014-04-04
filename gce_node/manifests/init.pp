@@ -156,5 +156,7 @@ class gce_node (
 
     class {'wlcg': }
 
+    import 'ganglia.pp'
+
   }
 }
