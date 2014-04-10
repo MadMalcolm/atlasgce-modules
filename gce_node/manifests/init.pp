@@ -1,7 +1,6 @@
 # class: gce_node
 #
-#  The gce_node class is an umbrella class for the cvmfs, xrootd, condor, and
-#  APF services on an ATLAS analysis node running in GCE.
+#  The gce_node class is an umbrella class for the cvmfs, xrootd, and condor
 #
 # Parameters:
 #   - $head: FQDN of Condor Central Manager and XRootD redirector
@@ -13,7 +12,7 @@
 #
 # Actions:
 #   - Installs extra packages from SLC6, CERN EPEL, and other repositories
-#   - Configures the CVMFS, XRootD, Condor, and APF services
+#   - Configures the CVMFS, XRootD, Condor
 #
 # Requires:
 #   - This has been tested on CentOS6
@@ -37,8 +36,6 @@ class gce_node (
   $use_xrootd = true,
   $xrootd_global_redirector = undef,
   $xrootd_scratch = '/data/scratch',
-  $use_apf = true,
-  $apf_homedir = '/var/lib/apf',
   $panda_site = undef,
   $panda_queue = undef,
   $panda_cloud = undef,
@@ -78,7 +75,6 @@ class gce_node (
       role => $role,
       cvmfs_cache => $cvmfs_cache,
       condor_homedir => $condor_homedir,
-      apf_homedir => $apf_homedir,
       xrootd_scratch => $xrootd_scratch,
     }
   }
@@ -126,18 +122,6 @@ class gce_node (
     class { 'cernvm': }
   }
 
-  if $role == 'head' and $use_apf == true {
-    class { 'apf::client':
-      panda_site => $panda_site,
-      panda_queue => $panda_queue,
-      panda_cloud => $panda_cloud,
-      factory_id => 'atlasgce_factory',
-      admin_email => $panda_administrator_email,
-      http_server_address => gce_metadata_query('instance/network-interfaces/0/access-configs/0/external-ip'),
-      homedir => $apf_homedir,
-      debug => $debug,
-    }
-  }
 
   if $role == 'csnode' {
     sysctl {'net.core.rmem_max': value => "16777216" }

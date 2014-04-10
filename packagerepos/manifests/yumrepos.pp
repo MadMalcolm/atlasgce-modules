@@ -7,52 +7,34 @@ class packagerepos::yumrepos {
   }
 
   yumrepo {
-    #"lcgdm-cbuild":
-        #baseurl  => "http://grid-deployment.web.cern.ch/grid-deployment/dms/lcgdm/repos/el$operatingsystemmajrelease/\$basearch",
-        #descr    => "LCGDM Continuous Builds",
-        #enabled  => 0,
-        #gpgcheck => 0,
-        #protect  => 1;
-    "slc6-os":
-      descr    => "Scientific Linux CERN ${operatingsystemmajrelease} (SLC${operatingsystemmajrelease}) base system packages",
-      baseurl  => "http://linuxsoft.cern.ch/cern/slc${operatingsystemmajrelease}X/\$basearch/yum/os/",
-      gpgcheck => 0,
-      enabled  => 1,
-      protect  => 1;
-    "slc6-updates":
-      descr    => "Scientific Linux CERN ${operatingsystemmajrelease} (SLC${operatingsystemmajrelease}) bugfix and security updates",
-      baseurl  => "http://linuxsoft.cern.ch/cern/slc${operatingsystemmajrelease}X/\$basearch/yum/updates/",
-      gpgcheck => 0,
-      enabled  => 1,
-      protect  => 1;
     "slc6-extras":
       descr    => "Scientific Linux CERN ${operatingsystemmajrelease} (SLC${operatingsystemmajrelease}) add-on packages",
-      baseurl  => "http://linuxsoft.cern.ch/cern/slc${operatingsystemmajrelease}X/\$basearch/yum/extras/",
+      baseurl  => "http://linuxsoft.cern.ch/cern/slc${operatingsystemmajrelease}X/${architecture}/yum/extras/",
       gpgcheck => 0,
       enabled  => 1,
       protect  => 1;
-    "slc6-cernonly":
-      descr    => "Scientific Linux CERN ${operatingsystemmajrelease} (SLC${operatingsystemmajrelease}) CERN-only packages",
-      baseurl  => "http://linuxsoft.cern.ch/onlycern/slc${operatingsystemmajrelease}X/\$basearch/yum/cernonly/",
+    "slc6-rhcommon":
+      descr    => "Scientific Linux CERN (SLC${operatingsystemmajrelease}) - RHCOMMON addons",
+      baseurl  => "http://linuxsoft.cern.ch/cern/rhcommon/slc${operatingsystemmajrelease}X/${architecture}/yum/rhcommon/",
       gpgcheck => 0,
-      enabled  => 0,
+      enabled  => 1,
       protect  => 1;
     "epel":
-      descr    => "Extra Packages for Enterprise Linux add-ons",
-      baseurl  => "http://linuxsoft.cern.ch/epel/${operatingsystemmajrelease}/\$basearch",
-      gpgcheck => 0,
-      enabled  => 1,
-      priority => 1,
-      protect  => 1;
+      descr      => "Extra Packages for Enterprise Linux ${operatingsystemmajrelease} - \$basearch",
+      mirrorlist => "https://mirrors.fedoraproject.org/metalink?repo=epel-${operatingsystemmajrelease}&arch=\$basearch",
+      gpgcheck   => 0,
+      enabled    => 1,
+      priority   => 1,
+      protect    => 1;
     "epel-testing":
-      descr    => "Extra Packages for Enterprise Linux add-ons, testing",
-      baseurl  => "http://linuxsoft.cern.ch/epel/testing/${operatingsystemmajrelease}/\$basearch",
-      gpgcheck => 0,
-      enabled  => 1,
-      priority => 99,
-      protect  => 1;
+      descr      => "Extra Packages for Enterprise Linux ${operatingsystemmajrelease} - Testing - \$basearch",
+      mirrorlist => "https://mirrors.fedoraproject.org/metalink?repo=testing-epel${operatingsystemmajrelease}&arch=$basearch",
+      gpgcheck   => 0,
+      enabled    => 1,
+      failovermethod => 'priority',
+      protect    => 1;
     "cvmfs":
-      descr    => "CVMFS yum repository for Enterprise Linux",
+      descr    => "CernVM packages",
       baseurl  => "http://cern.ch/cvmrepo/yum/cvmfs/EL/${operatingsystemmajrelease}/${architecture}",
       gpgcheck => 1,
       gpgkey   => 'https://cvmrepo.web.cern.ch/cvmrepo/yum/RPM-GPG-KEY-CernVM',
@@ -60,7 +42,7 @@ class packagerepos::yumrepos {
       priority => 1,
       protect  => 1;
     "cvmfs-testing":
-      descr    => "CVMFS yum repository for Enterprise Linux, testing",
+      descr    => "CernVM testing packages",
       baseurl  => "http://cern.ch/cvmrepo/yum/cvmfs-testing/EL/${operatingsystemmajrelease}/${architecture}",
       gpgcheck => 1,
       gpgkey   => 'https://cvmrepo.web.cern.ch/cvmrepo/yum/RPM-GPG-KEY-CernVM',
@@ -73,37 +55,6 @@ class packagerepos::yumrepos {
       enabled => 1,
       gpgcheck => 0,
       priority => 1,
-      protect  => 1;
-    "htcondor-development":
-      descr => "HTCondor Development RPM Repository for Redhat Enterprise Linux ${operatingsystemmajrelease}",
-      baseurl => "http://research.cs.wisc.edu/htcondor/yum/development/rhel${operatingsystemmajrelease}",
-      enabled => 1,
-      gpgcheck => 0,
-      priority => 99,
-      protect  => 1;
-    "racf-grid-production":
-      descr => "RACF Grid Production RPMS ${operatingsystemmajrelease}Workstation - ${architecture}",
-      baseurl => "http://dev.racf.bnl.gov/yum/grid/production/rhel/${operatingsystemmajrelease}Workstation/${architecture}",
-      enabled => 1,
-      gpgcheck => 1,
-      gpgkey   => 'http://dev.racf.bnl.gov/yum/racf-grid-release/RPM-GPG-KEY-racf-grid.asc',
-      priority => 1,
-      protect  => 1;
-    "racf-grid-testing":
-      descr => "RACF Grid Testing ${operatingsystemmajrelease}Workstation - ${architecture}",
-      baseurl => "http://dev.racf.bnl.gov/yum/grid/testing/rhel/${operatingsystemmajrelease}Workstation/${architecture}",
-      enabled => 1,
-      gpgcheck => 1,
-      gpgkey   => 'http://dev.racf.bnl.gov/yum/racf-grid-release/RPM-GPG-KEY-racf-grid.asc',
-      priority => 98,
-      protect  => 1;
-    "racf-grid-development":
-      descr => "RACF Grid Development for ${operatingsystemmajrelease}Workstation - ${architecture}",
-      baseurl => "http://dev.racf.bnl.gov/yum/grid/development/rhel/${operatingsystemmajrelease}Workstation/${architecture}",
-      enabled => 1,
-      gpgcheck => 1,
-      gpgkey   => 'http://dev.racf.bnl.gov/yum/racf-grid-release/RPM-GPG-KEY-racf-grid.asc',
-      priority => 99,
       protect  => 1;
   }
 }
