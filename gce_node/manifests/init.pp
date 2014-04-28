@@ -140,7 +140,9 @@ class gce_node (
 
     class {'wlcg': }
 
-    import 'ganglia.pp'
+    if $::gce_node::experiment_in == 'atlas' {
+      import 'ganglia.pp'
+    }
 
   }
 }

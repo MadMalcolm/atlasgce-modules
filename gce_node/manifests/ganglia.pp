@@ -5,17 +5,17 @@
 # clouds.
 
 $udp_recv_channel = [
-  { port => 8649 },
+  { port => 9006 },
 ]
 
 $udp_send_channel = [
-  { port => 8649, host => 'hn-grizzly.cern.ch', ttl => 2 },
+  { port => 9006, host => 'hn-grizzly.cern.ch', ttl => 2 },
 ]
 
-$cluster_name = 'ATLAS Test Cloud'
+$cluster_name = 'MULTI-CLUSTER_tmp'
 
 $tcp_accept_channel = [
-  {port => 8649},
+  {port => 9006},
 ]
 
 class{ 'ganglia::gmond':
