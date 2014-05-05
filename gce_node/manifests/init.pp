@@ -151,7 +151,7 @@ class gce_node (
       ]
 
       $udp_send_channel = [
-        { port => 9006, host => 'hn-grizzly.cern.ch', ttl => 2 },
+        { port => 9006, host => 'atlas-ganglia-mon.cern.ch', ttl => 2 },
       ]
 
       $cluster_name = 'MULTI-CLUSTER_tmp'
