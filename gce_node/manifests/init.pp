@@ -156,7 +156,7 @@ class gce_node (
           { port => 8649, host => 'atlas-ganglia-mon.cern.ch', ttl => 2 },
         ]
 
-        $cluster_name = 'OPENSTACK_CLOUDSCHEDULER'
+        $cluster_name = 'CERN-PROD_CLOUD'
 
         $tcp_accept_channel = [
           {port => 8649},
@@ -192,7 +192,7 @@ class gce_node (
           { port => 9004, host => 'atlas-ganglia-mon.cern.ch', ttl => 2 },
         ]
 
-        $cluster_name = 'ANALY_IAAS'
+        $cluster_name = 'IAAS'
 
         $tcp_accept_channel = [
           {port => 9004},
