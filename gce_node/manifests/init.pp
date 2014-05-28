@@ -146,26 +146,68 @@ class gce_node (
       # this sets up ganglia reporting to CERN's hn-grizzly. Need
       # find a way to determine which cluster name which cloud should
       # report to
-      $udp_recv_channel = [
-        { port => 9006 },
-      ]
+      if $::cloud_name == 'cern-atlas' {
 
-      $udp_send_channel = [
-        { port => 9006, host => 'atlas-ganglia-mon.cern.ch', ttl => 2 },
-      ]
+        $udp_recv_channel = [
+          { port => 8649 },
+        ]
 
-      $cluster_name = 'MULTI-CLUSTER_tmp'
+        $udp_send_channel = [
+          { port => 8649, host => 'atlas-ganglia-mon.cern.ch', ttl => 2 },
+        ]
 
-      $tcp_accept_channel = [
-        {port => 9006},
-      ]
+        $cluster_name = 'OPENSTACK_CLOUDSCHEDULER'
+
+        $tcp_accept_channel = [
+          {port => 8649},
+        ]
+
+        $my_host_location = 'CERN'
+
+      } elsif $::cloud_name == 'gridpp-oxford' or $::cloud_name == 'gridpp-imperial' {
+
+        $udp_recv_channel = [
+          { port => 9000 },
+        ]
+
+        $udp_send_channel = [
+          { port => 9000, host => 'atlas-ganglia-mon.cern.ch', ttl => 2 },
+        ]
+
+        $cluster_name = 'GRIDPP_CLOUD'
+
+        $tcp_accept_channel = [
+          {port => 9000},
+        ]
+
+        $my_host_location = 'UK'
+
+      } else {
+
+        $udp_recv_channel = [
+          { port => 9004 },
+        ]
+
+        $udp_send_channel = [
+          { port => 9004, host => 'atlas-ganglia-mon.cern.ch', ttl => 2 },
+        ]
+
+        $cluster_name = 'ANALY_IAAS'
+
+        $tcp_accept_channel = [
+          {port => 9004},
+        ]
+
+        $my_host_location = 'CA'
+
+      }
 
       class{ 'ganglia::gmond':
         cluster_name       => $cluster_name,
         cluster_owner      => 'unspecified',
         cluster_latlong    => 'unspecified',
         cluster_url        => 'unspecified',
-        host_location      => 'CERN',
+        host_location      => $my_host_location,
         udp_recv_channel   => $udp_recv_channel,
         udp_send_channel   => $udp_send_channel,
         tcp_accept_channel => $tcp_accept_channel,
