@@ -171,7 +171,7 @@ class gce_node (
         ]
 
         $udp_send_channel = [
-          { port => 9000, host => 'atlas-ganglia-mon.cern.ch', ttl => 2 },
+          { port => 9000, host => 'atlas-ganglia-mon.cern.ch', bind_hostname => 'yes', ttl => 2 },
         ]
 
         $cluster_name = 'GRIDPP_CLOUD'
@@ -189,7 +189,7 @@ class gce_node (
         ]
 
         $udp_send_channel = [
-          { port => 9004, host => 'atlas-ganglia-mon.cern.ch', ttl => 2 },
+          { port => 9004, host => 'atlas-ganglia-mon.cern.ch', bind_hostname => 'yes', ttl => 2 },
         ]
 
         $cluster_name = 'IAAS'
