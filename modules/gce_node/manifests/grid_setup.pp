@@ -21,6 +21,7 @@ class gce_node::grid_setup (
       owner => root,
       group => root,
       mode => 0755,
+      replace => false,
     }
     
     file { 'hostcert.pem':
@@ -47,6 +48,7 @@ class gce_node::grid_setup (
       owner => root,
       group => root,
       mode => 0755,
+      replace => false,
       require => File[$security_dir],
     }
 
