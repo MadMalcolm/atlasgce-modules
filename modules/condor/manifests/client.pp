@@ -84,6 +84,11 @@ class condor::client(
     require => Class['condor'],
   }
 
+  file { '/etc/condor/config.d/50cernvm':
+    ensure => absent,
+    before => Service['condor'],
+  }
+
   if $password {
     exec { pool_password:
       command => "/usr/sbin/condor_store_cred -c add -p $password -f $password_file",
