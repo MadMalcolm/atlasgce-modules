@@ -28,7 +28,7 @@ class packagerepos::yumrepos {
       protect    => 1;
     "epel-testing":
       descr      => "Extra Packages for Enterprise Linux 6 - Testing - \$basearch",
-      mirrorlist => "https://mirrors.fedoraproject.org/metalink?repo=testing-epel6&arch=$basearch",
+      mirrorlist => "https://mirrors.fedoraproject.org/metalink?repo=testing-epel6&arch=\$basearch",
       gpgcheck   => 0,
       enabled    => 1,
       failovermethod => 'priority',
