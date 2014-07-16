@@ -3,6 +3,8 @@
 # Condor startd jobwrapper
 # Executes using bash -l, so that all /etc/profile.d/*.sh scripts are sourced.
 #
-THISUSER=`/usr/bin/whoami`
-export HOME=`getent passwd $THISUSER | awk -F : '{print $6}'`
+
+# Workaround for condor not setting $HOME for worker sessions.
+# voms-proxy-info requires this.
+export HOME=`eval echo ~$USER`
 exec "$@"
