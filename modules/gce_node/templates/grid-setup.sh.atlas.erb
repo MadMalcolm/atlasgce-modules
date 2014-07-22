@@ -26,11 +26,5 @@ export ALRB_useGridSW=gLite
 #unset  AtlasSetupSite
 rm ~/.asetup
 
-<% if @atlas_site -%>
-# Site-specific variables (e.g. Frontier and Squid servers) are set based on
-# ATLAS_SITE_NAME.
-export ATLAS_SITE_NAME=<%= @atlas_site %>
-
-<% end -%>
 # This auto-setup should eventually become automatic
 #source /cvmfs/atlas.cern.ch/repo/sw/local/bin/auto-setup

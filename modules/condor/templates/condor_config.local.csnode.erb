@@ -7,8 +7,6 @@ VMType = "<%= @vmtype %>"
 # Prefer value contextualized by Cloud Scheduler and then use head
 <% if @central_manager -%>
 CONDOR_HOST=<%= @central_manager %>
-<% elsif @head -%>
-CONDOR_HOST=<%= @head %>
 <% else -%>
 CONDOR_HOST=UNCONFIGURED
 <% end -%>

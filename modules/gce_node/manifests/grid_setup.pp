@@ -1,5 +1,4 @@
 class gce_node::grid_setup (
-  $atlas_site = undef,
   $use_gridftp2 = false,
   $use_emi_grid_software = true,
   $setup_file = '/etc/profile.d/grid-setup.sh',

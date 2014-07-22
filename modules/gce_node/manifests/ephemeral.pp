@@ -4,10 +4,8 @@
 # thoughts.
 class gce_node::ephemeral (
   $cloud_type,
-  $role,
   $cvmfs_cache = '/var/cache/cvmfs2',
   $condor_homedir = '/var/lib/condor',
-  $xrootd_scratch = '/data/scratch',
 )
 {
   # Mounts for GCE
@@ -20,23 +18,18 @@ class gce_node::ephemeral (
       device => '/dev/vg00/lv_condor'
     }
 
-    if $role != 'head' {
-      mount_ephemeral { $xrootd_scratch:
-        device => '/dev/vg00/lv_xrootd',
-      }
-    }
     # Mounts for Nimbus
-    } elsif $cloud_type == 'Nimbus' {
-      mount_ephemeral { $condor_homedir:
-        device => 'LABEL=blankpartition0',
-        fstype => 'ext2',
-      }
-    # Mounts for OpenStack, EC2, etc.
-    } else {
-      mount_ephemeral { $condor_homedir:
-        device => 'LABEL=ephemeral0',
-      }
+  } elsif $cloud_type == 'Nimbus' {
+    mount_ephemeral { $condor_homedir:
+      device => 'LABEL=blankpartition0',
+      fstype => 'ext2',
     }
+    # Mounts for OpenStack, EC2, etc.
+  } else {
+    mount_ephemeral { $condor_homedir:
+      device => 'LABEL=ephemeral0',
+    }
+  }
 }
 
 define mount_ephemeral (
