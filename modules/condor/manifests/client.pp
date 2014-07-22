@@ -35,7 +35,6 @@
 
 
 class condor::client(
-  $head,
   $role,
   $password = undef,
   $slots = $processorcount,

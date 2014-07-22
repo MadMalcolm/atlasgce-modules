@@ -1,7 +1,7 @@
 ### Head (combined collector and submit) node setup
 # NOTE: For some reason, $FULL_HOSTNAME doesn't return the fqdn for the host
-CONDOR_HOST = <%= @head %>
-SCHEDD_NAME = condor@<%= @head %>
+CONDOR_HOST = <%= @central_manager %>
+SCHEDD_NAME = condor@<%= @central_manager %>
 COLLECTOR_NAME = Condor Central Manager
 
 START = TRUE

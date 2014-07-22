@@ -1,6 +1,6 @@
 ### Worker node setup
-CONDOR_HOST = <%= @head %>
-SCHEDD_NAME = condor@<%= @head %>
+CONDOR_HOST = <%= @central_manager %>
+SCHEDD_NAME = condor@<%= @central_manager %>
 
 START = TRUE
 SUSPEND = FALSE
