@@ -3,7 +3,7 @@ Facter.add("cloud_type") do
   setcode do
     # Check for existance of '/var/lib/cloud_type' and check the cloud flavour
     if File.exists?('/var/lib/cloud_type')
-      IO.read('/var/lib/cloud_type')
+      IO.read('/var/lib/cloud_type').chomp
     end
   end
 end
