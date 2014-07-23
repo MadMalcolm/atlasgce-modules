@@ -507,7 +507,7 @@ verify_execute () {
 # Start condor.
 start() {
         set_hostkey_permissions
-<% if @cloud_type == "gce" -%>
+<% if @cloud_type == 'gce' -%>
         setup_on_gce
 <% else -%>
         setup_on_ec2
