@@ -5,8 +5,7 @@ fi
 
 <% if @use_gridftp2 -%>
 export GLOBUS_FTP_CLIENT_GRIDFTP2=true
-
-<% end -%>
+<% end %>
 # Define atlas software location
 export VO_ATLAS_SW_DIR=/cvmfs/atlas.cern.ch/repo/sw
 
@@ -23,8 +22,5 @@ export ALRB_useGridSW=gLite
 <% end -%>
 
 ## Fix for using AtlasLocalRootBase with a kit
-#unset  AtlasSetupSite
+unset  AtlasSetupSite
 rm ~/.asetup
-
-# This auto-setup should eventually become automatic
-#source /cvmfs/atlas.cern.ch/repo/sw/local/bin/auto-setup
