@@ -10,6 +10,17 @@ node atlas-worker.heprc.uvic.ca.pem {
 
 
 ################################################################################
+node belle-worker.heprc.uvic.ca.pem {
+  
+  class { 'gce_node::belle':
+    cvmfs_cache    => '/var/cache/cvmfs2',
+    condor_homedir => '/var/lib/condor',
+  }
+  
+}
+
+
+################################################################################
 node default {
   
   class { 'gce_node::atlas':
