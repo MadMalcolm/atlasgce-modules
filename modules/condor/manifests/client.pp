@@ -12,8 +12,7 @@
 #  up of ...
 #
 # Parameters:
-#   - $head: FQDN of Condor Central Manager
-#   - $role: Role of this node (node, collector, submit)
+#   - $role: Role of this node (mcore for multi-core, score for single-core)
 #   - $password: Condor pool password
 #   - $slots: Number of worker slots for each node
 #   - $node_type: Determines what job types this node should accept
@@ -37,7 +36,6 @@
 class condor::client(
   $role,
   $password = undef,
-  $slots = $processorcount,
   $collectors = undef,
   $node_type = undef,
   $password_file = "$homedir/pool_password",
@@ -51,29 +49,44 @@ class condor::client(
   $java_exec_in = undef
 ) inherits condor
 {
-  if $job_wrapper_in != undef {
+
+  if $job_wrapper_in != undef
+  {
       $job_wrapper = $job_wrapper_in
-  } else {
+  }
+  else
+  {
     $job_wrapper = $osvariant ? {
       'CernVM' => '/opt/condor/libexec/jobwrapper.sh',
       default => '/usr/libexec/condor/jobwrapper.sh',
     }
   }
 
-  if $java_exec_in != undef {
+  if $java_exec_in != undef
+  {
     $java_exec = $java_exec_in
-  } else {
-    if $osvariant == 'CernVM' {
+  }
+  else
+  {
+    if $osvariant == 'CernVM'
+    {
       $java_exec = '/usr/lib/jvm/jre-1.6.0-openjdk.x86_64/bin/java'      
     }
   }
 
   
-  if $role == 'node' or $role == 'csnode' {
-    # Create an user account for each condor slot
-    $user_array = condor_user_array($slots)
-    condor_user { $user_array: }
+  if $role == 'mcore'
+  {
+    $slots = $::processorcount / 8
   }
+  else
+  {
+    $slots = $::processorcount
+  }
+  
+  # Create an user account for each condor slot
+  $user_array = condor_user_array($slots)
+  condor_user { $user_array: }
 
   file { $config:
     owner => 'root',
@@ -88,7 +101,8 @@ class condor::client(
     before => Service['condor'],
   }
 
-  if $password {
+  if $password
+  {
     exec { pool_password:
       command => "/usr/sbin/condor_store_cred -c add -p $password -f $password_file",
       require => File[$config],
@@ -114,20 +128,18 @@ class condor::client(
   }
 
   # Change the init.d script for the CloudScheduler nodes
-  if $role == 'csnode' {
-    $condor_config_val = $osvariant ? {
-      'CernVM' => '/opt/condor/bin/condor_config_val',
-      default  => '/usr/bin/condor_config_val',
-    }
+  $condor_config_val = $osvariant ? {
+    'CernVM' => '/opt/condor/bin/condor_config_val',
+    default  => '/usr/bin/condor_config_val',
+  }
 
-    file { '/etc/init.d/condor':
-      owner => 'root',
-      group => 'root',
-      mode => 0755,
-      content => template("condor/condor.init.d.erb"),
-      require => Class['condor'],
-      before => Service['condor'],
-    }
+  file { '/etc/init.d/condor':
+    owner   => 'root',
+    group   => 'root',
+    mode    => 0755,
+    content => template("condor/condor.init.d.erb"),
+    require => Class['condor'],
+    before  => Service['condor'],
   }
 
   service { 'condor':
@@ -135,7 +147,9 @@ class condor::client(
     enable => false,
     subscribe => File[$config, $job_wrapper],
   }
+  
 }
+
 
 define condor_user ($user = $name, $group = $name) {
   group { $user:

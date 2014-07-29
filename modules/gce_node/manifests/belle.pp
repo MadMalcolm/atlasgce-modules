@@ -54,10 +54,9 @@ class gce_node::belle (
   }
   
   class { 'condor::client':
-    role => 'csnode',
+    role => 'mcore',
     password => 'undefined',
     use_gsi_security => true,
-    slots => $::processorcount,
     vmtype => 'belle-worker',
     cloud_type => $cloud_type,
     debug => false,

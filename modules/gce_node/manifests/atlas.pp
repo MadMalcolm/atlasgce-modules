@@ -54,12 +54,11 @@ class gce_node::atlas (
   }
   
   class { 'condor::client':
-    role => 'csnode',
+    role => 'mcore',
     password => 'undefined',
     use_gsi_security => true,
-    slots => 1,
     vmtype => 'atlas-worker',
-    cloud_type => $cloud_type,
+    cloud_type => $::cloud_type,
     debug => false,
   }
 
