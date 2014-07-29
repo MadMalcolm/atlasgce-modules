@@ -112,7 +112,7 @@ class gce_node::atlas (
     cluster_owner      => 'unspecified',
     cluster_latlong    => 'unspecified',
     cluster_url        => 'unspecified',
-    override_hostname  => $::hostname,
+    override_hostname  => $::fqdn,
     host_location      => $my_host_location,
     udp_recv_channel   => $udp_recv_channel,
     udp_send_channel   => $udp_send_channel,
