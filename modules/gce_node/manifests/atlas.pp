@@ -57,7 +57,7 @@ class gce_node::atlas (
     role => 'csnode',
     password => 'undefined',
     use_gsi_security => true,
-    slots => $::processorcount,
+    slots => 1,
     vmtype => 'atlas-worker',
     cloud_type => $cloud_type,
     debug => false,
