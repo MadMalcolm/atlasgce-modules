@@ -85,7 +85,7 @@ class condor::client(
   }
   
   # Create an user account for each condor slot
-  $user_array = condor_user_array($slots)
+  $user_array = condor_user_array($::processorcount)
   condor_user { $user_array: }
 
   file { $config:
