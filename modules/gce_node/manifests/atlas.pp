@@ -72,8 +72,10 @@ class gce_node::atlas (
 
   exec {'ip link set eth0 txqueuelen 10000': path => '/sbin' }
 
-  class {'shoal':
-    require => Class['cvmfs::client'],
+  if $::use_wpad == false {
+    class {'shoal':
+      require => Class['cvmfs::client'],
+    }
   }
 
   class {'wlcg': }

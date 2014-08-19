@@ -6,9 +6,9 @@ CVMFS_REPOSITORIES=<%= @repositories %>
 CVMFS_QUOTA_LIMIT=<%= @quota %>
 <% end -%>
 <% if @squidproxy -%>
-CVMFS_HTTP_PROXY="<%= @squidproxy %>;DIRECT"
+CVMFS_HTTP_PROXY="<%= @squidproxy %>"
 <% else -%>
-CVMFS_HTTP_PROXY="http://cernvm-webfs.atlas-canada.ca:3128;DIRECT"
+CVMFS_HTTP_PROXY="auto"
 <% end -%>
 CVMFS_CACHE_BASE=<%= @cachedir %>
 <% if @debug -%>
