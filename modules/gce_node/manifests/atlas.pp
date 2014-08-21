@@ -104,7 +104,7 @@ class gce_node::atlas (
     $udp_send_channel = [{ port => 8649, host => 'atlas-ganglia-mon.cern.ch', ttl => 2 }]
     $tcp_accept_channel = [{port => 8649}]
     
-  } elsif $::cloud_name == 'gridpp-oxford' or $::cloud_name == 'gridpp-imperial' {
+  } elsif $::cloud_name == 'gridpp-oxford' or $::cloud_name == 'gridpp-imperial' or $::cloud_name == 'datacentred' {
 
     $cluster_name = 'GRIDPP_CLOUD'
     $my_host_location = 'UK'
