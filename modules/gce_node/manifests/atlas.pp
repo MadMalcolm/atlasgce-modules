@@ -41,14 +41,6 @@ class gce_node::atlas (
     cachedir => $cvmfs_cache,
   }  
 
-  class { 'cvmfs::client':
-    repositories => 'atlas.cern.ch,atlas-condb.cern.ch,atlas-nightlies.cern.ch,sft.cern.ch',
-    cvmfs_servers => 'http://cvmfs.racf.bnl.gov:8000/opt/@org@;http://cvmfs.fnal.gov:8000/opt/@org@;http://cvmfs-stratum-one.cern.ch:8000/opt/@org@;http://cernvmfs.gridpp.rl.ac.uk:8000/opt/@org@;http://cvmfs02.grid.sinica.edu.tw:8000/opt/@org@',
-    quota => 10000,
-    debug => false,
-    before => Class['condor::client'],
-  }
-
   class { 'condor':
     homedir => $condor_homedir,
   }
@@ -72,10 +64,32 @@ class gce_node::atlas (
 
   exec {'ip link set eth0 txqueuelen 10000': path => '/sbin' }
 
-  if $::use_wpad == false {
+  if $::use_wpad == 'true' {
+
+    class { 'cvmfs::client':
+      repositories => 'atlas.cern.ch,atlas-condb.cern.ch,atlas-nightlies.cern.ch,sft.cern.ch',
+      cvmfs_servers => 'http://cvmfs.racf.bnl.gov:8000/opt/@org@;http://cvmfs.fnal.gov:8000/opt/@org@;http://cvmfs-stratum-one.cern.ch:8000/opt/@org@;http://cernvmfs.gridpp.rl.ac.uk:8000/opt/@org@;http://cvmfs02.grid.sinica.edu.tw:8000/opt/@org@',
+      quota => 10000,
+      debug => false,
+      before => Class['condor::client'],
+    }
+
+  }
+  else {
+
+    class { 'cvmfs::client':
+      repositories => 'atlas.cern.ch,atlas-condb.cern.ch,atlas-nightlies.cern.ch,sft.cern.ch',
+      cvmfs_servers => 'http://cvmfs.racf.bnl.gov:8000/opt/@org@;http://cvmfs.fnal.gov:8000/opt/@org@;http://cvmfs-stratum-one.cern.ch:8000/opt/@org@;http://cernvmfs.gridpp.rl.ac.uk:8000/opt/@org@;http://cvmfs02.grid.sinica.edu.tw:8000/opt/@org@',
+      squidproxy => 'DIRECT',
+      quota => 10000,
+      debug => false,
+      before => Class['condor::client'],
+    }
+
     class {'shoal':
       require => Class['cvmfs::client'],
     }
+    
   }
 
   class {'wlcg': }
