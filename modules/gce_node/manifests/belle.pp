@@ -24,6 +24,16 @@ class gce_node::belle (
   $condor_homedir = '/var/lib/condor',
 ){
 
+  # dirty hack past network problems between KEK and amazon
+  host { 'dirac.cc.kek.jp':
+    ip => '202.13.207.211',
+  }
+  host { 'dirac1.cc.kek.jp':
+    ip => '202.13.207.225',
+  }
+
+
+
   class { 'gce_node::grid_setup':
     use_gridftp2 => true,
     experiment   => 'belle',
