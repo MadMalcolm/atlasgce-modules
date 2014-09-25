@@ -512,7 +512,7 @@ start() {
 <% else -%>
         setup_on_ec2
 <% end -%>
-	setup_ccb
+	#setup_ccb
 	set_central_manager $CENTRAL_MANAGER
         setup_vmtype $IMAGE_METADATA
 	update_condor_local_config

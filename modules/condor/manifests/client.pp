@@ -74,6 +74,11 @@ class condor::client(
     }
   }
 
+  host { "$::fqdn":
+    ip => $::ipaddress,
+    host_aliases => [ "$::hostname" ],
+  }
+
   
   if $role == 'mcore'
   {
