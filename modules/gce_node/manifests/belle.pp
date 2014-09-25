@@ -31,7 +31,15 @@ class gce_node::belle (
   host { 'dirac1.cc.kek.jp':
     ip => '202.13.207.225',
   }
-
+  host { 'dirac2.cc.kek.jp':
+    ip => '202.13.207.216',
+  }
+  host { 'dirac3.cc.kek.jp':
+    ip => '202.13.207.217',
+  }
+  host { 'kek2-lfc.cc.kek.jp':
+    ip => '202.13.206.45',
+  }
 
 
   class { 'gce_node::grid_setup':
